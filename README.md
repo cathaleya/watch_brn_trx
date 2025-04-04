@@ -23,8 +23,8 @@ A Telegram bot that monitors cryptocurrency balances across multiple blockchain 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/blockchain-monitor-bot.git
-cd watchbrn
+git clone https://github.com/cathaleya/watch_brn_trx.git
+cd watch_brn
 
 Install dependencies:
 
@@ -38,7 +38,8 @@ cp .env.example .env
 Edit .env with your credentials:
 
 env
-Copy
+Copy this and paste to your .env
+
 TELEGRAM_BOT_TOKEN=your_bot_token
 TELEGRAM_CHAT_ID=your_chat_id
 ALCHEMY_API_KEY=your_alchemy_key
@@ -48,7 +49,8 @@ Start the bot:
 
 bash
 Copy
-node bot.js
+node bot.js / npm start
+after start bot on your vps go to your telegram bot aftter banner use
 Telegram Commands
 /start - Begin monitoring
 
@@ -66,7 +68,7 @@ Copy
 BALANCES:
 * ARB Sepolia: 1.9184 ARB
 * Base Sepolia: 36.0104 BASE
-* Unichain Sepolia: Failed to fetch
+* Unichain Sepolia: you must edit in watch_brn.js and use RPC UNIchain with your alchemy rpc
 * Blast Sepolia: 13.2091 BLAST
 
 Next update: 10 minutes
