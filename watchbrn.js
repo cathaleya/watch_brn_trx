@@ -55,6 +55,11 @@ class BlockchainMonitorBot {
                 symbol: 'BASE',
                 type: 'native'
             },
+            'Optimis Sepolia': {
+                apiUrl: `https://opt-sepolia.g.alchemy.com/v2/${this.alchemyApiKey}`,
+                symbol: 'OPT',
+                type: 'native'
+            },
             'Unichain Sepolia': {
                 apiUrl: `https://unichain-sepolia.g.alchemy.com/v2/19g7XfRolp7-wX7NvTE7_ojyjd3Gvypr`,
                 symbol: 'UNI',
