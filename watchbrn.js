@@ -47,34 +47,47 @@ class BlockchainMonitorBot {
         this.chains = {
             'ARB Sepolia': {
                 apiUrl: `https://arb-sepolia.g.alchemy.com/v2/${this.alchemyApiKey}`,
-                symbol: 'ARB'
+                symbol: 'ARB',
+                type: 'native'
             },
             'Base Sepolia': {
                 apiUrl: `https://base-sepolia.g.alchemy.com/v2/${this.alchemyApiKey}`,
-                symbol: 'BASE'
+                symbol: 'BASE',
+                type: 'native'
             },
             'Unichain Sepolia': {
-                apiUrl: `https://unichain-sepolia.g.alchemy.com/v2${this.alchemyApiKey}`,
-                symbol: 'UNI'
+                apiUrl: `https://unichain-sepolia.g.alchemy.com/v2/19g7XfRolp7-wX7NvTE7_ojyjd3Gvypr`,
+                symbol: 'UNI',
+                type: 'native'
             },
             'Blast Sepolia': {
                 apiUrl: `https://blast-sepolia.g.alchemy.com/v2/${this.alchemyApiKey}`,
-                symbol: 'BLAST'
+                symbol: 'BLAST',
+                type: 'native'
+            },
+            'BRN Token': {
+                apiUrl: `https://b2n.explorer.caldera.xyz/api/v2/addresses/${this.address}`,
+                symbol: 'BRN',
+                type: 'token',
+                headers: {
+                    'Accept': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                }
             }
         };
     }
 
     async showBanner() {
         const banner = `
-  ¦¦¦¦¦¦+ ¦¦¦¦¦+ ¦¦¦¦¦¦¦¦+¦¦+  ¦¦+ ¦¦¦¦¦+ ¦¦+     ¦¦¦¦¦¦¦+¦¦+   ¦¦+ ¦¦¦¦¦+ 
- ¦¦+----+¦¦+--¦¦++--¦¦+--+¦¦¦  ¦¦¦¦¦+--¦¦+¦¦¦     ¦¦+----++¦¦+ ¦¦++¦¦+--¦¦+
- ¦¦¦     ¦¦¦¦¦¦¦¦   ¦¦¦   ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦     ¦¦¦¦¦+   +¦¦¦¦++ ¦¦¦¦¦¦¦¦
- ¦¦¦     ¦¦+--¦¦¦   ¦¦¦   ¦¦+--¦¦¦¦¦+--¦¦¦¦¦¦     ¦¦+--+    +¦¦++  ¦¦+--¦¦¦
- +¦¦¦¦¦¦+¦¦¦  ¦¦¦   ¦¦¦   ¦¦¦  ¦¦¦¦¦¦  ¦¦¦¦¦¦¦¦¦¦+¦¦¦¦¦¦¦+   ¦¦¦   ¦¦¦  ¦¦¦
+  Â¦Â¦Â¦Â¦Â¦Â¦+ Â¦Â¦Â¦Â¦Â¦+ Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦+Â¦Â¦+  Â¦Â¦+ Â¦Â¦Â¦Â¦Â¦+ Â¦Â¦+     Â¦Â¦Â¦Â¦Â¦Â¦Â¦+Â¦Â¦+   Â¦Â¦+ Â¦Â¦Â¦Â¦Â¦+ 
+ Â¦Â¦+----+Â¦Â¦+--Â¦Â¦++--Â¦Â¦+--+Â¦Â¦Â¦  Â¦Â¦Â¦Â¦Â¦+--Â¦Â¦+Â¦Â¦Â¦     Â¦Â¦+----++Â¦Â¦+ Â¦Â¦++Â¦Â¦+--Â¦Â¦+
+ Â¦Â¦Â¦     Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦   Â¦Â¦Â¦   Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦     Â¦Â¦Â¦Â¦Â¦+   +Â¦Â¦Â¦Â¦++ Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦
+ Â¦Â¦Â¦     Â¦Â¦+--Â¦Â¦Â¦   Â¦Â¦Â¦   Â¦Â¦+--Â¦Â¦Â¦Â¦Â¦+--Â¦Â¦Â¦Â¦Â¦Â¦     Â¦Â¦+--+    +Â¦Â¦++  Â¦Â¦+--Â¦Â¦Â¦
+ +Â¦Â¦Â¦Â¦Â¦Â¦+Â¦Â¦Â¦  Â¦Â¦Â¦   Â¦Â¦Â¦   Â¦Â¦Â¦  Â¦Â¦Â¦Â¦Â¦Â¦  Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦Â¦+Â¦Â¦Â¦Â¦Â¦Â¦Â¦+   Â¦Â¦Â¦   Â¦Â¦Â¦  Â¦Â¦Â¦
   +-----++-+  +-+   +-+   +-+  +-++-+  +-++------++------+   +-+   +-+  +-+
   
  MULTI-CHAIN BALANCE MONITOR
- v1.0 | 4 Testnets Supported
+ v1.1 | 4 Testnets + BRN Token Support
 `;
         console.log(banner);
         try {
@@ -92,19 +105,51 @@ class BlockchainMonitorBot {
         }
 
         try {
-            const response = await axios.post(chain.apiUrl, {
-                jsonrpc: "2.0",
-                method: "eth_getBalance",
-                params: [this.address, "latest"],
-                id: 1
-            }, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+            if (chain.type === 'native') {
+                const response = await axios.post(chain.apiUrl, {
+                    jsonrpc: "2.0",
+                    method: "eth_getBalance",
+                    params: [this.address, "latest"],
+                    id: 1
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    timeout: 10000
+                });
+
+                const rawBalance = parseInt(response.data.result, 16);
+                const formattedBalance = (rawBalance / Math.pow(10, 18)).toFixed(4);
+                
+                return {
+                    rawBalance: rawBalance,
+                    formattedBalance: formattedBalance,
+                    symbol: chain.symbol
+                };
+            } else if (chain.type === 'token') {
+                return await this.getBRNBalance();
+            }
+        } catch (error) {
+            logger.error(`Error fetching ${chainName} balance: ${error.message}`);
+            if (error.response) {
+                logger.error(`API Response: ${JSON.stringify(error.response.data)}`);
+            }
+            return null;
+        }
+    }
+
+    async getBRNBalance() {
+        const chain = this.chains['BRN Token'];
+        try {
+            const response = await axios.get(chain.apiUrl, {
+                headers: chain.headers,
                 timeout: 10000
             });
-
-            const rawBalance = parseInt(response.data.result, 16);
+            
+            logger.debug(`BRN API Response: ${JSON.stringify(response.data)}`);
+            
+            // Handle BRN balance from Caldera API
+            const rawBalance = Number(response.data.coin_balance);
             const formattedBalance = (rawBalance / Math.pow(10, 18)).toFixed(4);
             
             return {
@@ -113,7 +158,10 @@ class BlockchainMonitorBot {
                 symbol: chain.symbol
             };
         } catch (error) {
-            logger.error(`Error fetching ${chainName} balance: ${error.message}`);
+            logger.error(`BRN Balance Error: ${error.message}`);
+            if (error.response) {
+                logger.error(`BRN API Error Response: ${JSON.stringify(error.response.data)}`);
+            }
             return null;
         }
     }
@@ -146,7 +194,7 @@ class BlockchainMonitorBot {
             message += `<b>BALANCES:</b>\n`;
 
             // Check balances for all chains
-            for (const [chainName, _] of Object.entries(this.chains)) {
+            for (const [chainName, chainConfig] of Object.entries(this.chains)) {
                 const balanceInfo = await this.getChainBalance(chainName);
                 if (balanceInfo) {
                     message += `* ${chainName}: <b>${balanceInfo.formattedBalance}</b> ${balanceInfo.symbol}\n`;
